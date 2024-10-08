@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chronomètre</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    #timer {
+      font-size: 2em;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chronomètre</h1>
+  <div id="timer">00:00:00</div>
+  <button id="start">Démarrer</button>
+  <button id="stop">Arrêter</button>
+  <button id="reset">Réinitialiser</button>
+
+  <script>
+    let timer;
+    let seconds = 0;
+    let isRunning = false;
+
+    function formatTime(seconds) {
+      const hrs = Math.floor(seconds / 3600);
+      const mins = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+      return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    document.getElementById('start').addEventListener('click', () => {
+      if (!isRunning) {
+        isRunning = true;
+        timer = setInterval(() => {
+          seconds++;
+          document.getElementById('timer').textContent = formatTime(seconds);
+        }, 1000);
+      }
+    });
+
+    document.getElementById('stop').addEventListener('click', () => {
+      isRunning = false;
+      clearInterval(timer);
+    });
+
+    document.getElementById('reset').addEventListener('click', () => {
+      isRunning = false;
+      clearInterval(timer);
+      seconds = 0;
+      document.getElementById('timer').textContent = "00:00:00";
+    });
+  </script>
+</body>
+</html>
